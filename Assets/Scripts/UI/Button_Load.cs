@@ -25,7 +25,8 @@ public class Button_Load : MonoBehaviour
         }
         else
         {
-            Read_Json.ReadJson(filePath);//json∂¡»Î
+            //Json_Operation.ReadJson(filePath);//json∂¡»Î
+            Debug.Log("{0}"+filePath);
         }
 
 

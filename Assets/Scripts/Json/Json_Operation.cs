@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class Read_Json : MonoBehaviour
+public class Json_Operation : MonoBehaviour
 {
     public static bool ReadJson(string filePath)
     {
@@ -13,6 +13,11 @@ public class Read_Json : MonoBehaviour
         }
         string jsonText = File.ReadAllText(filePath);
         
+        return true;
+    }
+
+    public static bool WriteJson(string filePath)
+    {
         return true;
     }
 }

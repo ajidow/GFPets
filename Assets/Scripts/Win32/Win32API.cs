@@ -11,23 +11,23 @@ public class Win32API
         public int structSize;
         public IntPtr dlgOwner;
         public IntPtr instance;
-        public String filter;
-        public String customFilter;
+        public string filter;
+        public string customFilter;
         public int maxCustFilter;
         public int filterIndex;
-        public String file;
+        public string file;
         public int maxFile;
-        public String fileTitle;
+        public string fileTitle;
         public int maxFileTitle;
-        public String initialDir;
-        public String title;
+        public string initialDir;
+        public string title;
         public int flags;
         public short fileOffset;
         public short fileExtension;
-        public String defExt;
+        public string defExt;
         public IntPtr custData;
         public IntPtr hook;
-        public String templateName;
+        public string templateName;
         public IntPtr reservedPtr;
         public int reservedInt;
         public int flagsEx;
@@ -35,4 +35,7 @@ public class Win32API
 
     [DllImport("Comdlg32.dll")]
     public static extern bool GetOpenFileName([In, Out] OpenFileName ofn);
+    [DllImport("Comdlg32.dll")]
+    public static extern bool GetSaveFileName([In, Out] OpenFileName ofn);
+
 }
