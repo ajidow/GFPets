@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Model_Config
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    public class Config
     {
-        
-    }
+        public string name;
+        public string initialStatus;
+        public int VelocityOfMovementX;
+        public int VelocityOfMovementY;
+        public int BlackZoneStartX;
+        public int BlackZoneStartY;
+        public int BlackZoneEndX;
+        public int BlackZoneEndY;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

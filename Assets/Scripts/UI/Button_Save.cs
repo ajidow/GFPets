@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using SFB;
 
 public class Button_Save : MonoBehaviour
 {
@@ -15,17 +16,6 @@ public class Button_Save : MonoBehaviour
 
     void Button_Save_OnClick()
     {
-        string filePath;
-        filePath = Save_File_Dialog.SaveFileDialog(); //弹出保存文件框框 Win32API=>Save_File_Dialog=>Button_Save
-        if(filePath == null)
-        {
-            //保存文件失败
-        }
-        else
-        {
-            
-            //Json_Operation.WriteJson(filePath);
-            
-        }
+        var filePath = StandaloneFileBrowser.SaveFilePanel("Save File", "", "", "json");
     }
 }

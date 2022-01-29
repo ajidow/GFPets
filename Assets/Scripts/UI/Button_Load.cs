@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using SFB;
 
 public class Button_Load : MonoBehaviour
 {
@@ -16,19 +17,8 @@ public class Button_Load : MonoBehaviour
 
     void Button_Load_OnClick()
     {
-        string filePath;
-        filePath = Open_File_Dialog.OpenFileDialog();//弹出选择文件框框 Win32API=>Open_File_Dialog=>Button_Load
-        
-        if(filePath == null)
-        {
-            //打开文件失败
-        }
-        else
-        {
-            //Json_Operation.ReadJson(filePath);//json读入
-            Debug.Log("{0}"+filePath);
-        }
-
+        var filePath = StandaloneFileBrowser.OpenFilePanel("Open File", "", "json", true);
+        Json_Operation.ReadJson(filePath[0]);
 
     }    
 }
