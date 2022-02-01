@@ -18,7 +18,7 @@ public class Button_Load : MonoBehaviour
     void Button_Load_OnClick()
     {
         var filePath = StandaloneFileBrowser.OpenFilePanel("Open File", "", "json", true);
-        Json_Operation.ReadJson(filePath[0]);
+        Json_Operation.ReadJson(filePath[0],ref Init.MainConfig.config[Init.MainConfig.slot]);
 
     }    
 }
