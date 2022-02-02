@@ -20,8 +20,10 @@ public class Buttons_Select3 : MonoBehaviour
         ButtonNeedRecover.GetComponent<Image>().color = Color.white;//之前的变白
 
         this.GetComponent<Image>().color = Color.green;//现在的变绿
-        ChangeConfigText.UpdateConfigText();
+
         Init.MainConfig.slot = 3;
+        ChangeConfigText.UpdateConfigText();
+        
     }
 
 }

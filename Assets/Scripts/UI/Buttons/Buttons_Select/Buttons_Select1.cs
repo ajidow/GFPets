@@ -15,13 +15,15 @@ public class Buttons_Select1 : MonoBehaviour
 
     void Button_Model1_OnClick()
     {
-        string Button_Name_Recover = "Button_Model" + Init.MainConfig.slot.ToString();
+        string Button_Name_Recover = "Button_Model" + Init.MainConfig.slot.ToString();//大标题改一改
         GameObject ButtonNeedRecover = GameObject.Find(Button_Name_Recover);
         ButtonNeedRecover.GetComponent<Image>().color = Color.white;//之前的变白
 
         this.GetComponent<Image>().color = Color.green;//现在的变绿
-        ChangeConfigText.UpdateConfigText();//刷新大名
+
         Init.MainConfig.slot = 1;
+        ChangeConfigText.UpdateConfigText();//刷新大名
+        
     }
 
 }

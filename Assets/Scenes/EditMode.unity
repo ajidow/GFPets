@@ -1456,7 +1456,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.4811321, g: 0.46479177, b: 0.46479177, a: 0}
+  m_BackGroundColor: {r: 0.003921569, g: 0, b: 0.003921569, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -3117,7 +3117,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u4FDD\u5B58\u8BBE\u5B9A"
+  m_Text: "\u4FDD\u5B58\u8BBE\u5B9A\uFF08\u672A\u5B9E\u88C5\uFF09"
 --- !u!222 &1747262721
 CanvasRenderer:
   m_ObjectHideFlags: 0

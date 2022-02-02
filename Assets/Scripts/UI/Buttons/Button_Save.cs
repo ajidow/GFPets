@@ -17,6 +17,6 @@ public class Button_Save : MonoBehaviour
     void Button_Save_OnClick()
     {
         var filePath = StandaloneFileBrowser.SaveFilePanel("Save File", "", "", "json");
-        //Json_Operation.WriteJson(filePath,)
+        Json_Operation.WriteJson(filePath, ref Init.MainConfig.config[Init.MainConfig.slot]);
     }
 }

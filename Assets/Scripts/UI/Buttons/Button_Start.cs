@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Spine.Unity;
 
 public class Button_Start : MonoBehaviour
@@ -15,6 +16,7 @@ public class Button_Start : MonoBehaviour
 
     void Button_Start_OnClick()
     {
-        CreateAndDeleteModel.CreateModelFromFile();
+        CreateAndDeleteModel.CreateModelFromFile(ref Init.MainConfig);
+        //SceneManager.LoadScene("ShowMode");
     }
 }
