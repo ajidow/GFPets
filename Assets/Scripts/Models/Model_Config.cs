@@ -20,21 +20,26 @@ public class Model_Config
         public string AtlasFilePath;
         public string Texture2DPath;
         public string TextureName;
+        public int screenX;
+        public int screenY;
+        public float scale;
     }// test.json
     public int slot;
     public Config[] config;
     public DataAssetsFromExports[] Models;
-    public GameObject[] ModelName;
     public bool[] isOpen;
-
+    public bool[] isEmpty;
     public Model_Config()
     {
         slot = 1;
         config = new Config[10];
         Models = new DataAssetsFromExports[10];
-        ModelName = new GameObject[10];
         isOpen = new bool[10];
-        for(int i = 0; i <10; ++i)
+        isEmpty = new bool[10];
+        for (int i = 0; i < 10; ++i)
+        {
             isOpen[i] = false;
+            isEmpty[i] = true;
+        }
     }
 }

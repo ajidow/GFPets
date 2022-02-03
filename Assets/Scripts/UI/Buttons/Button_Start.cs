@@ -15,8 +15,7 @@ public class Button_Start : MonoBehaviour
     }
 
     void Button_Start_OnClick()
-    {
-        CreateAndDeleteModel.CreateModelFromFile(ref Init.MainConfig);
-        //SceneManager.LoadScene("ShowMode");
+    {   
+        SceneManager.LoadScene("ShowMode");   
     }
 }

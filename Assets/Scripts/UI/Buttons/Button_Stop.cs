@@ -14,7 +14,7 @@ public class Button_Stop : MonoBehaviour
 
     void Button_Stop_OnClick()
     {
-        CreateAndDeleteModel.DeleteModel(ref Init.MainConfig);
+        CreateAndDeleteModel.DeleteModel(ref Init.MainConfig,Init.MainConfig.slot);
         
     }
 }

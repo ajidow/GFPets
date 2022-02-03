@@ -16,7 +16,14 @@ public class Json_Operation : MonoBehaviour
         string jsonText = File.ReadAllText(filePath);
         
         cfg = JsonUtility.FromJson<Model_Config.Config>(jsonText);
-
+        if(cfg.screenX == -1)
+        {
+            cfg.screenX = Screen.width;
+        }
+        if(cfg.screenY == -1)
+        {
+            cfg.screenY = Screen.height;
+        }
         return true;
     }
 
