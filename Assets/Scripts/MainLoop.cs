@@ -14,6 +14,8 @@ public class MainLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        loop.checkHit();
+        //checkStatus()
+        loop.ClickFeedBack();
+       
     }
 }
