@@ -42,7 +42,11 @@ public class CreateAndDeleteModel
 
             string GameObjectToAttach = "Model" + WhichModel.ToString();//要把新建的skeletonAnimation挂载上去的gameobject
             GameObject neo =new GameObject(GameObjectToAttach);
-            MainConfig.Models[WhichModel].runtimeSkeletonAnimation = SkeletonAnimation.AddToGameObject(neo, MainConfig.Models[WhichModel].runtimeSkeletonDataAsset);
+            MainConfig.Models[WhichModel].runtimeSkeletonAnimation = SkeletonAnimation.AddToGameObject(neo, MainConfig.Models[WhichModel].runtimeSkeletonDataAsset);//挂载SkeletonAnimation
+
+            //var audioSource =  neo.AddComponent<AudioSource>();挂载羽音（待添加）
+            
+
             MainConfig.Models[WhichModel].runtimeSkeletonAnimation.AnimationState.SetAnimation(0, MainConfig.config[WhichModel].initialStatus, true);
            // SceneManager.MoveGameObjectToScene(neo, SceneManager.GetSceneByName("ShowMode"));
         }

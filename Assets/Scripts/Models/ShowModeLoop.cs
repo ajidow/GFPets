@@ -5,24 +5,30 @@ using UnityEngine;
 public class ShowModeLoop : MonoBehaviour
 {
 	private GameObject[] models;
+	private GameObject draggingModel;
+	private bool isDraggingModel;
 	private Model_Config MainConfig;
 	private float tapTimer;
 	private const float tapThreshold = 0.1f;
-	private enum status
+	private enum Clickstatus
 	{
 		None = 0,
 		Lsingle,
 		LlongDown,
+		LlongUp,
 		Rsingle
 	}
 
 	public ShowModeLoop(ref Model_Config MainConfig)
 	{
 		this.models = new GameObject[10];
+		draggingModel = new GameObject();
 		this.MainConfig = MainConfig;
 		tapTimer = 0.0f;
+		isDraggingModel = false;
 	}
 
+	//init
 	public void loopInit()
 	{
 		CameraInit();
@@ -53,8 +59,8 @@ public class ShowModeLoop : MonoBehaviour
 		
 		Camera cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 		cam.orthographicSize = Screen.height / 2;
-		Debug.Log(Screen.width);
-		Debug.Log(Screen.height);
+/*		Debug.Log(Screen.width);
+		Debug.Log(Screen.height);*/
 	}
 	private void BindHitBox()
 	{
@@ -85,13 +91,26 @@ public class ShowModeLoop : MonoBehaviour
 		Collider.AddComponent<BoxCollider>();
 	}
 
-	private int checkHit()
+	//click
+	public void ClickFeedBack()
+    {
+		switch(checkClickStatus())
+        {
+			case (int)Clickstatus.Lsingle:LsingleClicked(); break;
+			case (int)Clickstatus.LlongDown:LlongDownClicked(); break;
+			case (int)Clickstatus.LlongUp:LlongUpClicked();break;
+			case (int)Clickstatus.Rsingle:RsingleClicked();break;
+			default:break;
+        }
+		 
+	}
+	private int checkClickStatus()
 	{
-		status status;
-		status = status.None;
+		Clickstatus Clickstatus;
+		Clickstatus = Clickstatus.None;
 		if(Input.GetMouseButtonUp(1))//右键抬起
         {
-			status = status.Rsingle;
+			Clickstatus = Clickstatus.Rsingle;
         }
 		if (Input.GetMouseButton(0))//按下，判断是长按or other status;
 		{
@@ -101,47 +120,91 @@ public class ShowModeLoop : MonoBehaviour
 			}
 		   if(Time.time>tapTimer + tapThreshold)//长按
 			{
-				status = status.LlongDown;
+				Clickstatus = Clickstatus.LlongDown;
 			}
 		}
 		if(Input.GetMouseButtonUp(0))
 		{
 			if(Time.time > tapTimer+tapThreshold)
             {
-				status = status.None;
+				Clickstatus = Clickstatus.LlongUp;//取消长按
             }else if(Time.time <= tapThreshold+tapTimer)
             {
-				status = status.Lsingle;
+				Clickstatus = Clickstatus.Lsingle;
             }
 			tapTimer = 0.0f;
 		}
-		return (int)status;
+		return (int)Clickstatus;
 	}
 	private void RsingleClicked()
     {
-		GameObject res = new GameObject();
+		GameObject hitObject = CheckHitObject();
+		if(hitObject != null)
+        {
+			GameObject rootModel = hitObject.transform.parent.parent.gameObject;//被点击的collider的根节点，也就是model
+
+			int modelNumber = rootModel.name[5] - '0';//eg: if name == Model9, modelNumber == 9
+			MainConfig.ModelClickMotionNumber[modelNumber] += 1;
+			Debug.Log(MainConfig.config[modelNumber].ClickAnimationName.Length);
+			if (MainConfig.ModelClickMotionNumber[modelNumber] >= MainConfig.config[modelNumber].ClickAnimationName.Length)//
+				MainConfig.ModelClickMotionNumber[modelNumber] = 0;
+
+			var trackEntry = rootModel.GetComponent<Spine.Unity.SkeletonAnimation>().AnimationState.SetAnimation(0, MainConfig.config[modelNumber].ClickAnimationName[MainConfig.ModelClickMotionNumber[modelNumber]], true);
+			trackEntry.MixDuration = MainConfig.config[modelNumber].TransitionTime;//smooth transition
+        }
+	}
+	private void LsingleClicked()
+    {
+		//羽音（待添加）
+    }
+	private void LlongDownClicked()
+    {
+		GameObject hitObject = CheckHitObject();
+		if (isDraggingModel == false)
+		{
+			if (hitObject != null)
+			{
+
+				
+					isDraggingModel = true;
+					GameObject rootModel = hitObject.transform.parent.parent.gameObject;
+					draggingModel = rootModel;
+
+					int modelNumber = rootModel.name[5] - '0';
+					MainConfig.ModelClickMotionNumber[modelNumber] = 0;//下次单击从第一个动作开始循环
+					var trackEntry = rootModel.GetComponent<Spine.Unity.SkeletonAnimation>().AnimationState.SetAnimation(0, MainConfig.config[modelNumber].DragAnimationName, true);
+					trackEntry.MixDuration = MainConfig.config[modelNumber].TransitionTime;
+				
+
+			}
+		}
+		else
+		{
+			if (draggingModel != null)
+			{
+				var mousepos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
+				draggingModel.transform.position = Camera.main.ScreenToWorldPoint(mousepos);
+			}
+		}
+	}
+	private void LlongUpClicked()
+    {
+		int modelNumber = draggingModel.name[5] - '0';
+		var trackEntry = draggingModel.GetComponent<Spine.Unity.SkeletonAnimation>().AnimationState.SetAnimation(0, MainConfig.config[modelNumber].ClickAnimationName[0], true);
+		trackEntry.MixDuration = MainConfig.config[modelNumber].TransitionTime;
+		isDraggingModel = false;
+		draggingModel = null;
+	}
+	private GameObject CheckHitObject()
+    {
+		GameObject res = null;
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit))
 		{
 			res = hit.collider.gameObject;
 		}
-		if(res != null)
-        {
-			GameObject rootModel = res.transform.parent.parent.gameObject;
-			//////////////////////*********	Developing area			**********//////////////////
-			rootModel.GetComponent<Spine.Unity.SkeletonAnimation>().AnimationState.SetAnimation(0, "move", true);
-        }
+		return res;
 	}
-	public void ClickFeedBack()
-    {
-		switch(checkHit())
-        {
-			case (int)status.Lsingle:break;
-			case (int)status.LlongDown:break;
-			case (int)status.Rsingle:RsingleClicked();break;
-			default:break;
-        }
-		 
-	}
+	
 }

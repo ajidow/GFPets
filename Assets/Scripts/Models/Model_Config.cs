@@ -23,12 +23,18 @@ public class Model_Config
         public int screenX;
         public int screenY;
         public float scale;
+        public string[] ClickAnimationName;
+        public string DragAnimationName;
+        public string SleepAnimationName;
+        public string MoveAnimationName;
+        public float TransitionTime;
     }// test.json
     public int slot;
     public Config[] config;
     public DataAssetsFromExports[] Models;
     public bool[] isOpen;
     public bool[] isEmpty;
+    public int[] ModelClickMotionNumber;
     public Model_Config()
     {
         slot = 1;
@@ -36,10 +42,14 @@ public class Model_Config
         Models = new DataAssetsFromExports[10];
         isOpen = new bool[10];
         isEmpty = new bool[10];
+        ModelClickMotionNumber = new int[10];
+
+
         for (int i = 0; i < 10; ++i)
         {
             isOpen[i] = false;
             isEmpty[i] = true;
+            ModelClickMotionNumber[i] = 0;
         }
     }
 }
